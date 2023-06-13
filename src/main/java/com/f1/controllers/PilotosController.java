@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/drivers")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin
 public class PilotosController {
 
     @Autowired

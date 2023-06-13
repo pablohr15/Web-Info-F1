@@ -100,7 +100,7 @@ public class WebScrapping {
                 String country = "";
                 String countryFlag = "";
                 String helmet = "";
-                String biography = "";
+                StringBuilder biography = new StringBuilder();
                 String birthDate = "";
                 int podiums = 0;
                 String highestResult = "";
@@ -110,13 +110,14 @@ public class WebScrapping {
                 Document driverStats = getHTML(url);
 
                 Elements stats = driverStats.select("section.stats");
-                Elements biographyElements = driverStats.select("section.biography");
+                Elements biographyElements = driverStats.select("section.biography").select("div.text").select("p");
 
                 countryFlag = driverStats.select("span.icn-flag").select("img").attr("src");
 
                 for(Element e : biographyElements){
-                    biography += (e.select("div.text").select("p").text()+"\r\n");
+                    biography.append(e.text()).append('\n');
                 }
+                System.out.println(biography);
 
                 for(Element el : stats){
                     helmet = el.select("div.brand-logo").select("img").attr("src");
@@ -167,7 +168,7 @@ public class WebScrapping {
                 p.setDriverNumber(driverNumber);
                 p.setCountry(country);
                 p.setCountryFlag(countryFlag);
-                p.setBiography(biography);
+                p.setBiography(biography.toString());
                 p.setHelmet(helmet);
                 p.setDriverNumberUrl(driverNumberUrl);
                 p.setWorldChampionships(worldChampionships);

@@ -23,13 +23,9 @@ public class DemoF1Application {
 		WebScrapping ws = new WebScrapping();
 
 		Calendar c = new GregorianCalendar();
-		while (true){
 
-			if (c.get(Calendar.DAY_OF_WEEK)==1 && c.get(Calendar.HOUR_OF_DAY)>=22){
-				System.out.println("Running web scraping");
-				ws.scraping();
-			}
-		}
+		System.out.println("Running web scraping");
+		ws.scraping();
 
 
 
