@@ -1,0 +1,9 @@
+com\f1\services\InterfacePilotosService.class
+com\f1\controllers\PilotosController.class
+com\f1\CircuitsScraping.class
+com\f1\models\Circuit.class
+com\f1\WebScrapping.class
+com\f1\models\Piloto.class
+com\f1\services\PilotosService.class
+com\f1\DemoF1Application.class
+com\f1\repositories\PilotosRepository.class
