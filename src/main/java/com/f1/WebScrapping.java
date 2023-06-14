@@ -17,9 +17,9 @@ import java.util.List;
 public class WebScrapping {
 
     List<Piloto> pilotos = new ArrayList<Piloto>();
-    static final String DB_URL = "jdbc:mysql://localhost:3306/formula1";
-    static final String USER = "root";
-    static final String PASS = "151000_Ph";
+    static final String DB_URL = "jdbc:mysql://aws.connect.psdb.cloud/f1-db?sslMode=VERIFY_IDENTITY";
+    static final String USER = "9ea6u9p1d39git2u2ep1";
+    static final String PASS = "pscale_pw_G0PM5VL8ITLAs9yyEDtNe7VPLCYhF5LqY1OSIfUYwti";
 
     public void scraping(){
         //Elements aspirantes = getHTML("https://www.rtve.es/television/masterchef/").select("div.mod notic_mod txtsize_03 show_mid");
@@ -35,15 +35,16 @@ public class WebScrapping {
         try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt = conn.createStatement();
         ) {
-            String deleteDrivers = "DELETE FROM formula1.drivers;";
-            String resetAutoIncrement = "ALTER TABLE formula1.drivers AUTO_INCREMENT = 1;";
+            System.out.print("Connection OK");
+            String deleteDrivers = "DELETE FROM drivers;";
+            String resetAutoIncrement = "ALTER TABLE drivers AUTO_INCREMENT = 1;";
             stmt.executeUpdate(deleteDrivers);
             stmt.executeUpdate(resetAutoIncrement);
             System.out.println("Tabla de drivers vaciada");
             // Execute a query
             for(Piloto pil : pilotos){
                 System.out.println("Inserting records into the table...");
-                String sql = "INSERT INTO formula1.drivers(name, image, team, driver_number, biography, birth_date, country, country_flag, driver_number_url, helmet, highest_result, podiums, world_championships, image_detail) VALUES ('"+pil.getName()+"', '"+pil.getImage()+"', '"+ pil.getTeam()+"', "+pil.getDriverNumber()+", \""+pil.getBiography()+"\", '"+pil.getBirthDate()+"', '"+pil.getCountry()+"', '"+pil.getCountryFlag()+"', '"+pil.getDriverNumberUrl()+"', '"+pil.getHelmet()+"', '"+pil.getHighestResult()+"', "+pil.getPodiums()+", '"+pil.getWorldChampionships()+"', '"+pil.getImageDetail()+"');";
+                String sql = "INSERT INTO drivers(name, image, team, driver_number, biography, birth_date, country, country_flag, driver_number_url, helmet, highest_result, podiums, world_championships, image_detail) VALUES ('"+pil.getName()+"', '"+pil.getImage()+"', '"+ pil.getTeam()+"', "+pil.getDriverNumber()+", \""+pil.getBiography()+"\", '"+pil.getBirthDate()+"', '"+pil.getCountry()+"', '"+pil.getCountryFlag()+"', '"+pil.getDriverNumberUrl()+"', '"+pil.getHelmet()+"', '"+pil.getHighestResult()+"', "+pil.getPodiums()+", '"+pil.getWorldChampionships()+"', '"+pil.getImageDetail()+"');";
                 stmt.executeUpdate(sql);
                 System.out.println("Inserted records into the table...");
             }
@@ -117,7 +118,6 @@ public class WebScrapping {
                 for(Element e : biographyElements){
                     biography.append(e.text()).append('\n');
                 }
-                System.out.println(biography);
 
                 for(Element el : stats){
                     helmet = el.select("div.brand-logo").select("img").attr("src");
